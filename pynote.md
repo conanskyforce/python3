@@ -108,3 +108,87 @@ list元素的数据类型可以不同，甚至也可以包含另一个list
 tuple一旦初始化了之后，就不能修改  
 mylist = ('a','b','c','d')  
 现在这个tuple就不能变了，没有append()，insert()这样的方法，其他获取元素的方法和list 是一样的，也可以使用mylist[0],mylist[-1],但不能赋值为另外的元素。
+定义只有一个元素的tuple元素时候，必须加一个逗号，来消除歧义  
+>>>t = (1,)
+>>>t
+(1,)
+####条件判断
+sex=input("亲，请输入性别")
+if sex == "男":
+	print("您的性别为",sex)
+	print("有意思")
+else:
+	print("您的性别不是男性")  
+根据python的缩进规则 缩进为代码块，如果 if语句判断是True,就把缩进的两行都给执行了，如果判断为 False，则执行else下的内容  
+注意不要少写冒号:
+s = input("亲输入您的年龄")
+age = int(s)//因为input()返回的数据类型是str,str不能直接和整数比较，必须先把 str转换成整数,int()方法将其转换为整数  
+if age >= 25:
+	print("大叔了")
+elif age >=18:
+	print("年轻有为")
+elif age >=16:
+	print("最好时光")
+else:
+	print("太嫩啦")  
+if判断还能简写  
+if x:
+	print("meaningful")
+只要x是 非零数值，非空字符串，非空list，非False，就判断为True，否则为False  
+####循环  
+python的循环有两种，一种 for…in 循环，以此将llist或tuple中的元素迭代出来   
+
+	names = ['Michael', 'Bob', 'Tracy']
+	for name in names:
+	    print(name)
+	Michael
+	Bob
+	Tracy
+所以fox x in … 就是把每个元素带入变量x,然后执行缩进块的语句  
+计算1-10整数之和，可以利用一个sum变量做累加  
+
+	sum = 0
+	for x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
+	    sum = sum + x
+	print(sum)  
+range()函数可以生成一个整数序列，再通过list()函数可以转化为list。
+list(range(5))//[0,1,2,3,4]
+range(101)就可以生成0-100的整数序列  
+
+	sum = 0
+	for x in range(101):
+	    sum = sum + x
+	print(sum)//
+
+第二种while循环 只要满足条件，就不断循环   
+计算100以内所有基数的和  
+
+	sum = 0 
+	a = 99
+	while a > 0
+		sum+=a
+		a-=2
+	print(a)  
+break 提前退出循环  
+continue跳出本轮循环  
+Ctrl+c退出程序  
+####dict 和set  
+python中内置字典(JavaScript中的对象!)  
+d = {'a':1,'b':2,'c':3,'d':4}
+d['a']//1
+d['c']//3  
+通过key赋值  
+d['a'] = 32//'a':32
+一个key对应一个value  
+如果key不存在，dict就会报错  
+一是通过in方法判断key是否存在  
+	
+	'q' in d  
+	False 
+	'a' in d 
+	True  
+二是通过dict提供的get方法，如果key不存在，可以返回None，或者自己制定的value  
+d.get('dcoasd')//返回None
+d.get('dcoasd',-1)//返回 -1  
+要删除一个key，用pop(key)方法，对应的value也会被删除  
+d.pop('a')//d = {'b':2,'c':3,'d':4}
