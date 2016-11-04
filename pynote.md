@@ -62,5 +62,49 @@ x = b'ABC'
 以Unicode表示的str可以通过encode()方法编码为制定的bytes  
 'ABC'.encode('ascii')//b'ABC'
 '中文'.encode('utf-8')//b'\xe4\xb8\xad\xe6\x96\x87'
-'中文'.encode('ascii')//报错
- 
+'中文'.encode('ascii')//将报错
+如果我们从网络上读取到了字节流，读取到的就是bytes,要将bytes变为str，就要用到decode()方法,在bytes中，无法显示为ascii的字节，用\x##表示    
+b'ABC'.decode('ascii')//'ABC'
+b'\xe4\xb8\xad\xe6\x96\x87'.decode('utf-8')//'中文'  
+计算str包含多少个字符用len()函数  
+len('ABC')//3  
+len('中文')//2  
+如果换成bytes，len()计算的就是字节数  
+len(b'\xe4\xb8\xad\xe6\x96\x87')//6
+len('中文'.encode('utf-8'))//6  
+当源码包含中文时候，为了让他按utf-8编码读取，在文件开头写上  
+# -*- coding:utf-8-*-  
+####格式化  
+用%实现  
+'Hello,%s' %'world'//'Hello,world'
+'Hello,%s%s,you have %d.'%('dear ','conan',10000000000)//'He-
+llo,conan,you have 10000000000.'  
+在字符串内部，%s表示用字符串代替，%d表示用整数代替，有几个%?占位符，后边就跟几个变量或值，顺序要对应好，如果只有一个%?，括号可以省略   
+常见占位符  
+%d 整数  
+%f 浮点数  
+%s 字符串  
+%x 十六进制整数  
+%如果表示普通字符，用%转义，即%%  
+####list和tuple  
+#####list
+list(相当于array？)
+mylist = ['a','b','c','d']
+len(mylist)//获得mylist的长度(元素个数)  
+mylist[0]//'a'  
+mylist[1]//'b'  
+mylist[2]//'c'  
+mylist[3]//'d'  
+mylist[4]//超出边界，报错  
+mylist[-1]//'d'  
+mylist[-2]//'c'
+mylist[-5]//超出边界，报错  
+append往末尾添加元素  
+mylist.append('e')//mylist=['a','b','c','d','e']  
+删除指定位置的元素用pop(i)，i为索引位置  
+要将某个元素替换为别的元素，直接给对应位置赋值就行  
+list元素的数据类型可以不同，甚至也可以包含另一个list  
+#####tuple元组
+tuple一旦初始化了之后，就不能修改  
+mylist = ('a','b','c','d')  
+现在这个tuple就不能变了，没有append()，insert()这样的方法，其他获取元素的方法和list 是一样的，也可以使用mylist[0],mylist[-1],但不能赋值为另外的元素。
