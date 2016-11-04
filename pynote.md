@@ -192,3 +192,33 @@ d.get('dcoasd')//返回None
 d.get('dcoasd',-1)//返回 -1  
 要删除一个key，用pop(key)方法，对应的value也会被删除  
 d.pop('a')//d = {'b':2,'c':3,'d':4}
+dict的key值必须是不可变对象，比如字符串，整数，而list不能作为list
+因为dict根据key来计算value的储存位置，这种算法，也叫hash算法，如果key值为可变对象， 则报错，unhashable   
+set  
+set只有key值，没有value  
+要创建一个set，需要提供一个list作为输入集合  
+>>>s = set([1,2,3])  
+>s
+{1,2,3}  
+注意，传入的参数是一个list,而现实的{1,2,3}只是告诉你这个set内部有1,2,3这3个元素，重复元素在set中自动被过滤  
+add(key)添加元素到set中  
+s.add(0)
+>>>s
+{1,2,3,0}
+remove(key)可以删除元素  
+s.remove(2)
+>>>s
+{1,3,0}
+set可以看做数学意义上的无序和无重复元素的集合， 因此，两个set可以做数学的交集，并集等操作  
+
+	s1 = set([1,2,3,4])  
+	s2 = set([5,4,0,2,1])  
+	s1&s2//{1,2}
+	s1|s2//{0,1,2,3,4,5}  
+	
+	>>> a = 'abc'
+	>>> a.replace('a', 'A')
+	'Abc'
+	>>> a
+	'abc'  
+####函数  
