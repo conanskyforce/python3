@@ -340,3 +340,53 @@ tuple也是一种list，只是tuple不可变，操作结果仍然为tuple
 
 	(1,2,3,5,7,8)[1:3]//(2,3)
 	"asdasf"[-3:]//"asf"
+####迭代
+在python中，迭代是通过for…in 进行的  
+dict，字符串都能进行迭代  
+	
+	d = {'a':1,'b':2,'c':3,'d':4,'e':5}
+	for key in d:
+		print(key)
+	for ch in "asdaf"
+		print(ch)
+dict中，默认是迭代key的，如果要迭代value，可以用 for value in d.values()，如果要同时迭代key和value,可以用 for k,v in d.items()  
+当我们使用for循环时候，只要作用域一个可迭代的对象，for循环就可以正常运行，我们通过该collections模块的Iterable类型判断一个对象是否是可迭代对象  
+
+	>>> from collections import Iterable
+	>>> isinstance('abc', Iterable) # str是否可迭代
+	True
+	>>> isinstance([1,2,3], Iterable) # list是否可迭代
+	True
+	>>> isinstance(123, Iterable) # 整数是否可迭代
+	False
+#####列表生成式
+	>>> list(range(1,11))  生成：
+	[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	>>> list(x*x for x in range(1,11))  生成：
+	[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数的平方：
+把要生成的元素x * x放到前面，后面跟for循环，就可以把list创建出来，
+	>>> [x * x for x in range(1, 11) if x % 2 == 0]
+	[4, 16, 36, 64, 100]
+还可以使用两层循环，可以生成全排列：
+	
+	>>> [m + n for m in 'ABC' for n in 'XYZ']
+	['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ']
+列出当前目录下所有的文件和目录名：
+
+	import os
+	[d for d in os.listdir('.')]# os.listdir可以列出文件和目录
+#####生成器
+
+
+
+
+
+
+
+
+
+
+
+
+
