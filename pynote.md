@@ -225,3 +225,36 @@ set可以看做数学意义上的无序和无重复元素的集合， 因此，�
 函数的调用  
 abs(-15)//15  abs求绝对值  
 max(1,2,-5,1.5)//2 返回较大的一个值  
+数据类型的转换  
+int('46'),将字符串转换为number  
+str("24"),将数据类型转换为字符串  
+bool(),转换为布尔值  
+####定义函数  
+	def my_abs(x):
+		if x>=0:
+			return x
+		else:
+			return -x
+函数内部执行语句时候，一旦遇到return，函数就执行完毕，并返回结果。
+将文件保存为abs.py  
+那么久可以通过 from abs import my_abs 来导入my_abs()函数，即  
+fro 文件名 import 函数名  
+#####空函数  
+	def nont():
+		pass
+定义一个函数，什么也不做(用作占位符，就是没想好函数怎么写的时候)
+  
+	def my_abs(x):
+	    if not isinstance(x, (int, float)):
+	        raise TypeError('bad operand type')
+	    if x >= 0:
+	        return x
+	    else:
+	        return -x
+	return x1,x2//return 也可以返回多个值，其实是一个tuple!  
+#####函数的参数  
+######位置参数与默认参数  
+power(x,y,z=18,a="Beijing")  
+默认参数可以不提供，当提供的时候，参数按顺序赋值，或直接用等于=号赋值  
+默认参数必须指向不变对象！  
+######可变参数
