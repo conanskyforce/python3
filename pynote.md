@@ -377,16 +377,72 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
 	import os
 	[d for d in os.listdir('.')]# os.listdir可以列出文件和目录
 #####生成器
+在python中，一遍循环，一遍计算的机制，成为生成器，generator 
+  
+	>>>L = [x*x for x in range(10)]
+	>>>L
+	[0,1,4,9,16,25,36,49,64,81]
+	>>>g = (x*x for x in range(10))//第一种定义方法啊 
+	>>>g
+	<generator object <genexpr> at 0x1022ef630>
+调用它：
 
+	>>> g = (x * x for x in range(10))
+	>>> for n in g:
+	...     print(n)
+	... 
+	0
+	1
+	4
+	9
+	16
+	25
+	36
+	49
+	64
+	81
+斐波那契数列：
 
+	def fib(max):
+	    n, a, b = 0, 0, 1
+	    while n < max:
+	        print(b)
+	        a, b = b, a + b
+	        n = n + 1
+	    return 'done'
 
+注意，赋值语句：
 
+	a, b = b, a + b
+相当于：
 
+	t = (b, a + b) # t是一个tuple
+	a = t[0]
+	b = t[1]
+要把fib函数变成generator，只需要把print(b)改为yield b就可以了：
 
+	def fib(max):
+	    n, a, b = 0, 0, 1
+	    while n < max:
+	        yield b
+	        a, b = b, a + b
+	        n = n + 1
+	    return 'done'
+如果一个函数定义中包含了yield关键字，那么这个函数就不再是一个普通的函数了，而是一个generator  
+#####迭代器
+可以直接作用于for循环的数据类型有以下几种，  
+一是集合数据，list，tuple，dict，set，str等，  
+而是generator，包括生成器和带yield的generator function  
+这些可以作用于for循环的对象统称为 Iterable  
+isinstance()判断一个对象是否是Iterable对象    
+可以被next()函数调用并不断返回下一个值的对象称为迭代器：  Iterator。  
+生成器都是Iterator对象，但list、dict、str虽然是Iterable，却不是Iterator。
 
+把list、dict、str等Iterable变成Iterator可以使用iter()函数：
 
-
-
-
-
-
+	>>> isinstance(iter([]), Iterator)
+	True
+	>>> isinstance(iter('abc'), Iterator)
+	True
+#####函数式编程  
+######高阶函数  
