@@ -258,3 +258,65 @@ power(x,y,z=18,a="Beijing")
 默认参数可以不提供，当提供的时候，参数按顺序赋值，或直接用等于=号赋值  
 默认参数必须指向不变对象！  
 ######可变参数
+组装一个list或tuple调用进去!!! 
+
+	def calc(*numbers):
+	    sum = 0
+	    for n in numbers:
+	        sum = sum + n * n
+	    return sum
+参数多一个*！
+calc((1,2,5,7,9))简写为calc(1,2,5,7,9)!  
+
+	>>> nums = [1, 2, 3]
+	>>> calc(*nums)
+	14
+在list或tuple前面加一个*，把其元素变为参数传递进去  
+######关键字参数  
+	>>> extra = {'city': 'Beijing', 'job': 'Engineer'}
+	>>> person('Jack', 24, **extra)
+	name: Jack age: 24 other: {'city': 'Beijing', 'job': 'Engineer'}  
+没有可变参数的情况下，用*作为分隔符  
+
+	def person(name, age, *, city='Beijing', job):
+	    print(name, age, city, job)
+#####参数组合  
+参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数。  
+	def f1(a, b, c=0, *args, **kw):
+	    print('a =', a, 'b =', b, 'c =', c, 'args =', args, 'kw =', kw)
+	
+	def f2(a, b, c=0, *, d, **kw):
+	    print('a =', a, 'b =', b, 'c =', c, 'd =', d, 'kw =', kw)
+	>>> f1(1, 2)
+	a = 1 b = 2 c = 0 args = () kw = {}
+	>>> f1(1, 2, c=3)
+	a = 1 b = 2 c = 3 args = () kw = {}
+	>>> f1(1, 2, 3, 'a', 'b')
+	a = 1 b = 2 c = 3 args = ('a', 'b') kw = {}
+	>>> f1(1, 2, 3, 'a', 'b', x=99)
+	a = 1 b = 2 c = 3 args = ('a', 'b') kw = {'x': 99}
+	>>> f2(1, 2, d=99, ext=None)
+	a = 1 b = 2 c = 0 d = 99 kw = {'ext': None}  
+
+*args是可变参数，args接收的是一个tuple  
+*kw是关键字参数，kw接收的是一个dict  
+####递归函数  
+阶乘  
+
+	def fact(n):
+	    if n==1:
+	        return 1
+	    return n * fact(n - 1)
+尾递归是指，在函数返回的时候，调用自身本身，并且，return语句不能包含表达式。这样，编译器或者解释器就可以把尾递归做优化，使递归本身无论调用多少次，都只占用一个栈帧，不会出现栈溢出的情况。  
+
+	def hanoi(n,x,y,z):
+	    if n==1:
+	        print(x,'-->',z)
+	    else:
+	        hanoi(n-1,x,z,y)#将前n-1个盘子从x移动到y上
+	        hanoi(1,x,y,z)#将最底下的最后一个盘子从x移动到z上
+	        hanoi(n-1,y,x,z)#将y上的n-1个盘子移动到z上
+	n=int(input('请输入汉诺塔的层数：'))
+	hanoi(n,'x','y','z')
+####高级特性  
+
