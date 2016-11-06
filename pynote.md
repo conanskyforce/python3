@@ -446,3 +446,55 @@ isinstance()判断一个对象是否是Iterable对象
 	True
 #####函数式编程  
 ######高阶函数  
+变量可以指向函数本身，直接调用函数和调用变量相同  
+函数名其实就是指向函数的变量  
+把函数作为参数传入，这样的函数称为高阶函数，函数式编程就是指这种高度抽象的编程范式。
+######map和reduce 
+map接受两个参数，一个是函数，一个是Iterable，map将传入的函数依次作用到序列的每个元素，并把结果作为新的Iterable返回  
+把这个list所有数字转换为字符串  
+
+	>>> list(map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9]))
+	['1', '2', '3', '4', '5', '6', '7', '8', '9']
+reduce把结果继续和序列的下一个元素做累积计算，  
+
+	reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)
+reduce 用作序列求和  
+
+	>>> from functools import reduce
+	>>> def add(x, y):
+	...     return x + y
+	...
+	>>> reduce(add, [1, 3, 5, 7, 9])
+	25
+str也是一个序列  
+将 str 转换为int的函数  
+
+	>>>from functools import reduce
+	>>>def fn(x,y):
+
+
+		return x*10+y
+	>>>def char2num(s):
+		return {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}[s]
+	>>>reduce(fn,map(char2num,'13579')
+	13579
+整理一下就是str2int函数  
+
+	from functools import reduce
+	def str2int(s):
+	    def fn(x, y):
+	        return x * 10 + y
+	    def char2num(s):
+	        return {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}[s]
+	    return reduce(fn, map(char2num, s))
+
+
+
+
+
+
+
+
+
+
+
