@@ -487,10 +487,21 @@ str也是一个序列
 	    def char2num(s):
 	        return {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}[s]
 	    return reduce(fn, map(char2num, s))
+#####filter
+python内建的filter()函数用于过滤序列    
+和map()类似，filter()也接收一个函数和一个序列。和map()不同的是，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素。  
 
-
-
-
+	def is_odd(n):
+	    return n % 2 == 1
+	
+	list(filter(is_odd, [1, 2, 4, 5, 6, 9, 10, 15]))
+把一个序列中的空字符串删掉，可以这么写：
+	
+	def not_empty(s):
+	    return s and s.strip()
+	
+	list(filter(not_empty, ['A', '', 'B', None, 'C', '  ']))
+	# 结果: ['A', 'B', 'C']
 
 
 
