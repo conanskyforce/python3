@@ -502,6 +502,117 @@ python内建的filter()函数用于过滤序列
 	
 	list(filter(not_empty, ['A', '', 'B', None, 'C', '  ']))
 	# 结果: ['A', 'B', 'C']
+#####sorted
+Python内置的sorted()函数就可以对list进行排序：
+
+	>>> sorted([36, 5, -12, 9, -21])
+	[-21, -12, 5, 9, 36]
+此外，sorted()函数也是一个高阶函数，它还可以接收一个key函数来实现自定义的排序，例如按绝对值大小排序：
+
+	>>> sorted([36, 5, -12, 9, -21], key=abs)
+	[5, 9, -12, -21, 36]
+我们再看一个字符串排序的例子：
+
+	>>> sorted(['bob', 'about', 'Zoo', 'Credit'])
+	['Credit', 'Zoo', 'about', 'bob']
+默认情况下，对字符串排序，是按照ASCII的大小比较的，由于'Z' < 'a'，结果，大写字母Z会排在小写字母a的前面。
+
+现在，我们提出排序应该忽略大小写，按照字母序排序。要实现这个算法，不必对现有代码大加改动，只要我们能用一个key函数把字符串映射为忽略大小写排序即可。忽略大小写来比较两个字符串，实际上就是先把字符串都变成大写（或者都变成小写），再比较。
+
+这样，我们给sorted传入key函数，即可实现忽略大小写的排序：
+
+	>>> sorted(['bob', 'about', 'Zoo', 'Credit'], key=str.lower)
+	['about', 'bob', 'Credit', 'Zoo']
+要进行反向排序，不必改动key函数，可以传入第三个参数reverse=True：
+	
+	>>> sorted(['bob', 'about', 'Zoo', 'Credit'], key=str.lower, reverse=True)
+	['Zoo', 'Credit', 'bob', 'about']
+####返回函数
+	def lazy_sum(*args):
+	    def sum():
+	        ax = 0
+	        for n in args:
+	            ax = ax + n
+	        return ax
+	    return sum
+当我们调用lazy_sum()时，返回的并不是求和结果，而是求和函数：
+
+	>>> f = lazy_sum(1, 3, 5, 7, 9)
+	>>> f
+	<function lazy_sum.<locals>.sum at 0x101c6ed90>
+调用函数f时，才真正计算求和的结果：
+
+	>>> f()
+	25
+在这个例子中，我们在函数lazy_sum中又定义了函数sum，并且，内部函数sum可以引用外部函数lazy_sum的参数和局部变量，当lazy_sum返回函数sum时，相关参数和变量都保存在返回的函数中，这种称为“闭包（Closure）”的程序结构拥有极大的威力。
+
+请再注意一点，当我们调用lazy_sum()时，每次调用都会返回一个新的函数，即使传入相同的参数：
+
+	>>> f1 = lazy_sum(1, 3, 5, 7, 9)
+	>>> f2 = lazy_sum(1, 3, 5, 7, 9)
+	>>> f1==f2
+	False
+f1()和f2()的调用结果互不影响。
+#####闭包  
+返回闭包时牢记的一点就是：返回函数不要引用任何循环变量，或者后续会发生变化的变量。
+#####匿名函数  
+	>>> list(map(lambda x: x * x, [1, 2, 3, 4, 5, 6, 7, 8, 9]))
+	[1, 4, 9, 16, 25, 36, 49, 64, 81]
+	通过对比可以看出，匿名函数lambda x: x * x实际上就是：
+	def f(x):
+	    return x * x
+关键字lambda表示匿名函数，冒号前面的x表示函数参数。  
+匿名函数有个限制，就是只能有一个表达式，不用写return，返回值就是该表达式的结果。
+
+用匿名函数有个好处，因为函数没有名字，不必担心函数名冲突。此外，匿名函数也是一个函数对象，也可以把匿名函数赋值给一个变量，再利用变量来调用该函数：
+
+	>>> f = lambda x: x * x
+	>>> f
+	<function <lambda> at 0x101c6ef28>
+	>>> f(5)
+	25
+#####装饰器
+函数对象有一个__name__属性，可以拿到函数的名字：  
+
+	>>> def now():
+	...     print('2015-3-25')
+	...
+	>>> f = now
+	>>> f()
+	2015-3-25
+	>>> now.__name__
+	'now'
+	>>> f.__name__
+	'now'
+现在，假设我们要增强now()函数的功能，比如，在函数调用前后自动打印日志，但又不希望修改now()函数的定义，这种在代码运行期间动态增加功能的方式，称之为“装饰器”（Decorator）。  
+****
+python rulib2  
+下载网页方法  
+
+	第一种：直接  
+	import urllib2
+	#直接请求  
+	response = urllib2.urlopen("http://www.baidu.com")
+	#获取状态码，如果是200表示获取成功  
+	print response.getcode()
+	#读取内容
+	cont = response.read()
+***
+	第二种：添加data,http header  
+	import urllib2
+	#创建Request对象
+	request = urllib2.Request(url)
+	#添加数据  
+	request.add_data('a','1')
+	#添加http的header
+	request.add_header('User-Agent','Mozilla/5.0')
+	#发送请求获取结果  
+	response = urllib2.urlopen(request)
+*** 
+第三种：添加特殊情景的处理器 
+HTTPCookieProcessor ProxyHandler HTTPSHandler HTTPRedictHandler  
+
+
 
 
 
