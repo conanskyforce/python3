@@ -695,14 +695,61 @@ HTTPCookieProcessor ProxyHandler HTTPSHandler HTTPRedictHandler
 	finally...
 	END
 没有错误发生，所以except语句块不会被执行，但是finally如果有，则一定会被执行（可以没有finally语句）。
+记录错误
+
+如果不捕获错误，自然可以让Python解释器来打印出错误堆栈，但程序也被结束了。既然我们能捕获错误，就可以把错误堆栈打印出来，然后分析错误原因，同时，让程序继续执行下去。
+
+Python内置的logging模块可以非常容易地记录错误信息：
+	
+	# err_logging.py
+	
+	import logging
+	
+	def foo(s):
+	    return 10 / int(s)
+	
+	def bar(s):
+	    return foo(s) * 2
+	
+	def main():
+	    try:
+	        bar('0')
+	    except Exception as e:
+	        logging.exception(e)
+	
+	main()
+	print('END')
 
 
 
 
+#####
+#####文件读写  
+读写文件是最常见的IO操作。Python内置了读写文件的函数，用法和C是兼容的。
 
+读写文件前，我们先必须了解一下，在磁盘上读写文件的功能都是由操作系统提供的，现代操作系统不允许普通的程序直接操作磁盘，所以，读写文件就是请求操作系统打开一个文件对象（通常称为文件描述符），然后，通过操作系统提供的接口从这个文件对象中读取数据（读文件），或者把数据写入这个文件对象（写文件）。
 
+读文件
 
+要以读文件的模式打开一个文件对象，使用Python内置的open()函数，传入文件名和标示符：
 
+	>>> f = open('E:/pytest/test.txt', 'r')
+标示符'r'表示读，这样，我们就成功地打开了一个文件。
+
+如果文件不存在，open()函数就会抛出一个IOError的错误，并且给出错误码和详细的信息告诉你文件不存在：
+	
+	>>> f=open('/Users/michael/notfound.txt', 'r')
+	Traceback (most recent call last):
+	  File "<stdin>", line 1, in <module>
+	FileNotFoundError: [Errno 2] No such file or directory: '/Users/michael/notfound.txt'
+
+如果文件打开成功，接下来，调用read()方法可以一次读取文件的全部内容，Python把内容读到内存，用一个str对象表示：
+
+	>>> f.read()
+	'Hello, world!'
+最后一步是调用close()方法关闭文件。文件使用完毕后必须关闭，因为文件对象会占用操作系统的资源，并且操作系统同一时间能打开的文件数量也是有限的：
+
+	>>> f.close()
 
 
 
