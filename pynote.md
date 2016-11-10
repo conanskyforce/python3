@@ -619,6 +619,10 @@ HTTPCookieProcessor ProxyHandler HTTPSHandler HTTPRedictHandler
 ****
 ****
 ******** 
+####模块  
+一个py文件，就称之为一个模块   
+，分模块为单个文件可以大大提高可维护性，其次，当一个模块编写完毕，就可以被其他地方引用,我们在编写程序的时候，也经常引用其他模块包括内置模块和第三方模块  
+#####使用模块  
 
 
 
