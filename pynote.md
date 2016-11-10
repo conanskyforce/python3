@@ -623,6 +623,91 @@ HTTPCookieProcessor ProxyHandler HTTPSHandler HTTPRedictHandler
 一个py文件，就称之为一个模块   
 ，分模块为单个文件可以大大提高可维护性，其次，当一个模块编写完毕，就可以被其他地方引用,我们在编写程序的时候，也经常引用其他模块包括内置模块和第三方模块  
 #####使用模块  
+需要注意的是，在Python中，变量名类似__xxx__的，也就是以双下划线开头，并且以双下划线结尾的，是特殊变量，特殊变量是可以直接访问的，不是private变量，所以，不能用\__name\__、\__score__这样的变量名。  
+
+有些时候，你会看到以一个下划线开头的实例变量名，比如_name，这样的实例变量外部是可以访问的，但是，按照约定俗成的规定，当你看到这样的变量时，意思就是，“虽然我可以被访问，但是，请把我视为私有变量，不要随意访问”。  
+
+双下划线开头的实例变量是不是一定不能从外部访问呢？其实也不是。不能直接访问\_\_name是因为Python解释器对外把 \_\_name变量改成了\_Student\_\_name，所以，仍然可以通过\_\_Studen\_\_name来访问\__name变量：  
+#####获取对象信息  
+但是type()函数返回的是什么类型呢？它返回对应的Class类型。如果我们要在if语句中判断，就需要比较两个变量的type类型是否相同：
+
+	>>> type(123)==type(456)
+	True
+	>>> type(123)==int
+	True
+	>>> type('abc')==type('123')
+	True
+	>>> type('abc')==str
+	True
+	>>> type('abc')==type(123)
+	False
+判断基本数据类型可以直接写int，str等，但如果要判断一个对象是否是函数怎么办？可以使用types模块中定义的常量：
+
+	>>> import types
+	>>> def fn():
+	...     pass
+	...
+	>>> type(fn)==types.FunctionType
+	True
+	>>> type(abs)==types.BuiltinFunctionType
+	True
+	>>> type(lambda x: x)==types.LambdaType
+	True
+	>>> type((x for x in range(10)))==types.GeneratorType
+	True
+#####实例属性和类属性
+由于Python是动态语言，根据类创建的实例可以任意绑定属性。
+
+给实例绑定属性的方法是通过实例变量，或者通过self变量：
+
+	class Student(object):
+	    def __init__(self, name):
+	        self.name = name
+	
+	s = Student('Bob')
+	s.score = 90
+但是，如果Student类本身需要绑定一个属性呢？可以直接在class中定义属性，这种属性是类属性，归Student类所有：
+	
+	class Student(object):
+	    name = 'Student'
+当我们定义了一个类属性后，这个属性虽然归类所有，但类的所有实例都可以访问到。
+#####面向对象高级编程  
+------挖坑------
+********
+#####错误、调试和测试  
+让我们用一个例子来看看try的机制：
+
+	try:
+	    print('try...')
+	    r = 10 / 0
+	    print('result:', r)
+	except ZeroDivisionError as e:
+	    print('except:', e)
+	finally:
+	    print('finally...')
+	print('END')
+当我们认为某些代码可能会出错时，就可以用try来运行这段代码，如果执行出错，则后续代码不会继续执行，而是直接跳转至错误处理代码，即except语句块，执行完except后，如果有finally语句块，则执行finally语句块，至此，执行完毕。
+
+上面的代码在计算10 / 0时会产生一个除法运算错误：
+
+	try...
+	except: division by zero
+	finally...
+	END
+没有错误发生，所以except语句块不会被执行，但是finally如果有，则一定会被执行（可以没有finally语句）。
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
